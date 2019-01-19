@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Edge</title>
+    <title>JSDoc: Class: Node</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Edge</h1>
+    <h1 class="page-title">Class: Node</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Edge<span class="signature">(id, nodeA, nodeB, length, info<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Node<span class="signature">(id, location, info<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class representing an edge in the tunnel graph</div>
+            <div class="class-description">Class representing a node in the tunnel graph</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="Edge"><span class="type-signature"></span>new Edge<span class="signature">(id, nodeA, nodeB, length, info<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Node"><span class="type-signature"></span>new Node<span class="signature">(id, location, info<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -53,7 +53,7 @@
 
 
 <div class="description">
-    Creates a new Edge object <b>TODO:</b> are there any more datapoints that could be useful?
+    Creates a new Node Object <b>TODO:</b> Are there any more datapoints that could be useful?
 </div>
 
 
@@ -115,20 +115,20 @@
 
             
 
-            <td class="description last">The id of the edge</td>
+            <td class="description last">The id of the node</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>nodeA</code></td>
+                <td class="name"><code>location</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><a href="Node.html">Node</a></span>
+<span class="param-type"><a href="Coordinate.html">Coordinate</a></span>
 
 
             
@@ -146,69 +146,7 @@
 
             
 
-            <td class="description last">One of the nodes that the edge is incident to</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>nodeB</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Node.html">Node</a></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The other node that the edge is incident to</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>length</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">The length of the edge in meters</td>
+            <td class="description last">The location of the node</td>
         </tr>
 
     
@@ -241,7 +179,7 @@
 
             
 
-            <td class="description last">Dictionary containing additional information about the edge
+            <td class="description last">Additional information about the node
                 <h6>Properties</h6>
                 
 
@@ -303,20 +241,23 @@
                 </td>
             
 
-            <td class="description last">Boolean value specifying if the edge is indoors</td>
+            <td class="description last">Boolean value specifying if the node is indoors</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>hasStairs</code></td>
+                <td class="name"><code>building</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">boolean</span>
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Building</span>
 
 
             
@@ -337,58 +278,21 @@
             
                 <td class="default">
                 
-                    false
+                    null
                 
                 </td>
             
 
-            <td class="description last">Boolean value specifying if the edge includes a staicase</td>
+            <td class="description last">The building that the node is in. If none, specify null.
+            If the node is in the tunnels, specify 'TUNNEL' <b>TODO:</b> Should there be
+            a buildings enum?</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>hasElevator</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">boolean</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
-
-            <td class="description last">Boolean value specifying if the edge includes an elevator</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>width</code></td>
+                <td class="name"><code>floor</code></td>
             
 
             <td class="type">
@@ -415,12 +319,90 @@
             
                 <td class="default">
                 
-                    4
+                    null
                 
                 </td>
             
 
-            <td class="description last">the width of the edge in meters</td>
+            <td class="description last">The floor that the node is on</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>roomNumber</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+
+            <td class="description last">The room number associated with the node</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>incidentEdges</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="Edge.html">Edge</a>></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    []
+                
+                </td>
+            
+
+            <td class="description last">The edges that are incident to the node</td>
         </tr>
 
     
@@ -468,7 +450,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Edge.js.html">Edge.js</a>, <a href="Edge.js.html#line4">line 4</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line4">line 4</a>
     </li></ul></dd>
     
 
@@ -522,7 +504,7 @@
     
 
     
-    <h4 class="name" id=".loadByID"><span class="type-signature">(static) </span>loadByID<span class="signature">(id)</span><span class="type-signature"> &rarr; {<a href="Edge.html">Edge</a>}</span></h4>
+    <h4 class="name" id=".loadByID"><span class="type-signature">(static) </span>loadByID<span class="signature">(id)</span><span class="type-signature"> &rarr; {<a href="Node.html">Node</a>}</span></h4>
     
 
     
@@ -530,7 +512,7 @@
 
 
 <div class="description">
-    <b>TODO:</b> Loads the edge with the given id from the database
+    <b>TODO:</b> Loads the node with the given id from the database
 </div>
 
 
@@ -582,7 +564,7 @@
 
             
 
-            <td class="description last">The id of the edge to be loaded</td>
+            <td class="description last">The id of the node to be loaded</td>
         </tr>
 
     
@@ -623,7 +605,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Edge.js.html">Edge.js</a>, <a href="Edge.js.html#line33">line 33</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line34">line 34</a>
     </li></ul></dd>
     
 
@@ -650,7 +632,7 @@
 
         
 <div class="param-desc">
-    The loaded edge
+    The loaded node
 </div>
 
 
@@ -661,7 +643,7 @@
     </dt>
     <dd>
         
-<span class="param-type"><a href="Edge.html">Edge</a></span>
+<span class="param-type"><a href="Node.html">Node</a></span>
 
 
     </dd>
