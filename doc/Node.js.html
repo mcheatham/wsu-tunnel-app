@@ -47,35 +47,28 @@ class Node {
     // ---------- Private fields ----------
     // All of these fields will be read-only
     var _id = id, _location = undefined, _isIndoors = undefined,
-      _building = undefined, _floor = undefined, _roomNumber = undefined,
-      _incidentEdgeIDs = undefined, _isLoaded = false;
+      _buildingID = undefined, _floor = undefined, _roomNumber = undefined,
+      _incidentEdgeIDs = undefined, _nodeTypeID = undefined, _isLoaded = false;
 
     /**
      * Method that checks if the node has been loaded from the database and
-     * if not, loads it &lt;i>&lt;b>TODO:&lt;/b> Make this so it loads from the SQL database&lt;/i>
+     * if not, loads it.
      */
     this.checkIsLoaded = function() {
 
       // If the data still needs to be loaded
       if(!_isLoaded) {
         // Load the data from the database
-        var nodeData = nodeDummyDatabase[_id];
+        var nodeData = loadNodeData(_id);
 
         // Save the data into the private variables
         _location = new Coordinate(nodeData.location.lat, nodeData.location.long, nodeData.location.elev);
         _isIndoors = nodeData.isIndoors;
-        _building = nodeData.building;
+        _buildingID = nodeData.buildingID;
         _floor = nodeData.floor;
         _roomNumber = nodeData.roomNumber;
-
-        // TODO: Load the edges from the edges database
-        _incidentEdgeIDs = [];
-
-        edgeDummyDatabase.forEach((i) => {
-          if(i.nodeA_ID == _id || i.nodeB_ID == _id) {
-            _incidentEdgeIDs.push(i.id);
-          }
-        });
+        _incidentEdgeIDs = loadIncidentEdges(_id);
+        _nodeTypeID = nodeData.nodeTypeID
 
         // Record that the data has been loaded
         _isLoaded = true;
@@ -116,13 +109,12 @@ class Node {
     }
 
     /**
-     * Gets the building (if any) that the node is in
-     * @return {string|Building} The building (if any) that the node is in
-     * &lt;i>&lt;b>TODO:&lt;/b> Should there be a Building enum?&lt;/i>
+     * Gets the ID of the building that the node is in
+     * @return {number} The ID of the building that the node is in
      */
-    this.getBuilding = function() {
+    this.getBuildingID = function() {
       this.checkIsLoaded();
-      return _building;
+      return _buildingID;
     }
 
     /**
@@ -152,6 +144,14 @@ class Node {
       return _incidentEdges;
     }
 
+    /**
+     * Gets the ID of the node's type
+     * @return {number} The ID of the node's type
+     */
+    this.getNodeTypeID = function() {
+      this.checkIsLoaded();
+      return _nodeTypeID;
+    }
     // ---------- End getters for private fields ----------
   }
 
@@ -173,10 +173,9 @@ class Node {
    * @type {boolean} */
   get isIndoors() { return this.getIsIndoors() };
 
-  /** What building (if any) the node is in
-   *  &lt;i>&lt;b>TODO:&lt;/b> Should there be a building enum?&lt;/i>
-   * @type {string|Building}*/
-  get building() { return this.getBuilding() };
+  /** The ID of the  building that the node is in
+   * @type {number}*/
+  get buildingID() { return this.getBuildingID() };
 
   /** What floor the node is on
    * @type {number} */
@@ -190,7 +189,39 @@ class Node {
    * @type {number[]}*/
   get incidentEdgeIDs() { return this.getIncidentEdgeIDs() };
 
+  /** The ID of th node's type
+   * @type {number} */
+  get nodeTypeID() {return this.getNodeTypeID() };
+
   // ---------- End direct access getters and setters ----------
+}
+
+/**
+ * This functions connects to the database, reads the information about a given node,
+ * and then returns it as a JSON object
+ * @param {number} id - The ID of the node to be loaded
+ * @return {Object} The data for that node
+ */
+function loadNodeData(id) {
+  console.log("Loading node " + id);
+  return nodeDummyDatabase[id];
+}
+
+/**
+ * This function connects to the database and finds all edges that are incident
+ * to a given node
+ * @param {number} id - The ID of the node to find edges incident to
+ * @return {number[]} The ID's of all the edges that are incident to the given node
+ */
+function loadIncidentEdges(id) {
+  var edges = [];
+  edgeDummyDatabase.forEach((i) => {
+    if(i.nodeA_ID == _id || i.nodeB_ID == _id) {
+      edges.push(i.id);
+    }
+  });
+
+  return edges;
 }
 
 module.exports = Node;
@@ -204,13 +235,13 @@ module.exports = Node;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Coordinate.html">Coordinate</a></li><li><a href="Edge.html">Edge</a></li><li><a href="Node.html">Node</a></li><li><a href="Test.html">Test</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Coordinate.html">Coordinate</a></li><li><a href="Edge.html">Edge</a></li><li><a href="Node.html">Node</a></li><li><a href="Test.html">Test</a></li></ul><h3>Global</h3><ul><li><a href="global.html#loadEdgeData">loadEdgeData</a></li><li><a href="global.html#loadIncidentEdges">loadIncidentEdges</a></li><li><a href="global.html#loadNodeData">loadNodeData</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 20 2019 17:26:46 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 20 2019 18:20:39 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>

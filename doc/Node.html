@@ -196,14 +196,13 @@ node is not loaded from the database until it is needed.
 
         
             
-<h4 class="name" id="building"><span class="type-signature"></span>building<span class="type-signature"> :string|Building</span></h4>
+<h4 class="name" id="buildingID"><span class="type-signature"></span>buildingID<span class="type-signature"> :number</span></h4>
 
 
 
 
 <div class="description">
-    What building (if any) the node is in
- <i><b>TODO:</b> Should there be a building enum?</i>
+    The ID of the  building that the node is in
 </div>
 
 
@@ -212,10 +211,7 @@ node is not loaded from the database until it is needed.
     <ul>
         <li>
             
-<span class="param-type">string</span>
-|
-
-<span class="param-type">Building</span>
+<span class="param-type">number</span>
 
 
         </li>
@@ -254,7 +250,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line151">line 151</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line150">line 150</a>
     </li></ul></dd>
     
 
@@ -326,7 +322,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line155">line 155</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line154">line 154</a>
     </li></ul></dd>
     
 
@@ -470,7 +466,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line163">line 163</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line162">line 162</a>
     </li></ul></dd>
     
 
@@ -704,6 +700,78 @@ node is not loaded from the database until it is needed.
 
         
             
+<h4 class="name" id="nodeTypeID"><span class="type-signature"></span>nodeTypeID<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    The ID of th node's type
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line166">line 166</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="roomNumber"><span class="type-signature"></span>roomNumber<span class="type-signature"> :string</span></h4>
 
 
@@ -758,7 +826,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line159">line 159</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -795,7 +863,7 @@ node is not loaded from the database until it is needed.
 
 <div class="description">
     Method that checks if the node has been loaded from the database and
-if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
+if not, loads it.
 </div>
 
 
@@ -873,7 +941,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     
 
     
-    <h4 class="name" id="getBuilding"><span class="type-signature"></span>getBuilding<span class="signature">()</span><span class="type-signature"> &rarr; {string|Building}</span></h4>
+    <h4 class="name" id="getBuildingID"><span class="type-signature"></span>getBuildingID<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
     
 
     
@@ -881,7 +949,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
 
 
 <div class="description">
-    Gets the building (if any) that the node is in
+    Gets the ID of the building that the node is in
 </div>
 
 
@@ -925,7 +993,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line95">line 95</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line87">line 87</a>
     </li></ul></dd>
     
 
@@ -952,8 +1020,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
 
         
 <div class="param-desc">
-    The building (if any) that the node is in
-<i><b>TODO:</b> Should there be a Building enum?</i>
+    The ID of the building that the node is in
 </div>
 
 
@@ -964,10 +1031,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     </dt>
     <dd>
         
-<span class="param-type">string</span>
-|
-
-<span class="param-type">Building</span>
+<span class="param-type">number</span>
 
 
     </dd>
@@ -1037,7 +1101,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line104">line 104</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line96">line 96</a>
     </li></ul></dd>
     
 
@@ -1145,7 +1209,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line64">line 64</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line57">line 57</a>
     </li></ul></dd>
     
 
@@ -1253,7 +1317,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line122">line 122</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line114">line 114</a>
     </li></ul></dd>
     
 
@@ -1361,7 +1425,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line85">line 85</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line78">line 78</a>
     </li></ul></dd>
     
 
@@ -1469,7 +1533,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line70">line 70</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line63">line 63</a>
     </li></ul></dd>
     
 
@@ -1577,7 +1641,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line76">line 76</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line69">line 69</a>
     </li></ul></dd>
     
 
@@ -1616,6 +1680,114 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     <dd>
         
 <span class="param-type"><a href="Coordinate.html">Coordinate</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="getNodeTypeID"><span class="type-signature"></span>getNodeTypeID<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Gets the ID of the node's type
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line123">line 123</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The ID of the node's type
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
 
 
     </dd>
@@ -1685,7 +1857,7 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line113">line 113</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line105">line 105</a>
     </li></ul></dd>
     
 
@@ -1751,13 +1923,13 @@ if not, loads it <i><b>TODO:</b> Make this so it loads from the SQL database</i>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Coordinate.html">Coordinate</a></li><li><a href="Edge.html">Edge</a></li><li><a href="Node.html">Node</a></li><li><a href="Test.html">Test</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Coordinate.html">Coordinate</a></li><li><a href="Edge.html">Edge</a></li><li><a href="Node.html">Node</a></li><li><a href="Test.html">Test</a></li></ul><h3>Global</h3><ul><li><a href="global.html#loadEdgeData">loadEdgeData</a></li><li><a href="global.html#loadIncidentEdges">loadIncidentEdges</a></li><li><a href="global.html#loadNodeData">loadNodeData</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 20 2019 17:26:46 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Jan 20 2019 18:20:39 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>
