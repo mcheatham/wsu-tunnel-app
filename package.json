@@ -1,0 +1,14 @@
+{
+  "name": "mysql-wsutunnelapp",
+  "version": "1.0.0",
+  "description": "skeleton access to the test database",
+  "main": "index.js",
+  "scripts": {
+    "test": "node src/connect.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.16.0"
+  }
+}
