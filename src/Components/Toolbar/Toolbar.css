@@ -3,7 +3,7 @@
     top:0;
     left:0;
     width:100%;
-    background: darkcyan;
+    background: #026937;
     height: 56px;
 }
 
@@ -14,11 +14,16 @@
     padding: 0 1rem;
 }
 .toolbar_logo a{
-   color: white;
+    color: white;
     text-decoration: none;
     font-size: 1.5rem;
-    
+
 }
+
+.toolbar_logo a:hover {
+  text-shadow: 0 0 2px #e4dec7;
+}
+
 .toolbar_logo{
     margin-left: 1rem;
 }
@@ -30,19 +35,17 @@
 }
 .toolbar_nav_items li{
     padding: 0 0.5rem;
+    line-height: 30px;
 }
 .spacer{
     flex:1;
 }
 
 .toolbar_nav_items a{
-    color:white;
+    color: #e4dec7;
     text-decoration: none;
 }
 
 .toolbar_nav_items a:hover{
-    color: red;
-}
-.toolbar_nav_items a:active{
-    color:red;
+    color: #af8446;
 }
