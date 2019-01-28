@@ -1,8 +1,8 @@
-const Coordinate = require('./Coordinate.js');
-const Node = require('./Node.js');
-const Edge = require('./Edge.js');
-const PathFinder = require('./PathFinder.js');
-const Graph = require('./Graph.js');
+import Coordinate from './Coordinate.js';
+import Node from './Node.js';
+import Edge from './Edge.js';
+import PathFinder from './PathFinder.js';
+import Graph from './Graph.js';
 
 /**
  * Class for testing algorithm, loading, etc...

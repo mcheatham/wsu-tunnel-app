@@ -1,4 +1,4 @@
-nodeDummyDatabase = [
+var nodeDummyDatabase = [
   {
     "id": 0,
     "location": {
@@ -66,4 +66,5 @@ nodeDummyDatabase = [
   }
 ]
 
-module.exports =  nodeDummyDatabase;
+//module.exports =  nodeDummyDatabase;
+export default nodeDummyDatabase;

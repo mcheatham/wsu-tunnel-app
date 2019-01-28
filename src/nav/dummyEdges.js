@@ -1,4 +1,4 @@
-edgeDummyDatabase = [
+var edgeDummyDatabase = [
   {
     "id": 0,
     "nodeA_ID": 0,
@@ -48,7 +48,7 @@ edgeDummyDatabase = [
     "hasStairs": false,
     "hasElevator": false,
     "width": 4
-  }, 
+  },
   {
     "id": 5,
     "nodeA_ID": 2,
@@ -61,4 +61,5 @@ edgeDummyDatabase = [
   }
 ];
 
-module.exports = edgeDummyDatabase;
+// module.exports = edgeDummyDatabase;
+export default edgeDummyDatabase;

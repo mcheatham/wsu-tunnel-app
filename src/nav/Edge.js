@@ -1,4 +1,4 @@
-const edgeDummyDatabase = require('./dummyEdges.js');
+import edgeDummyDatabase from './dummyEdges.js';
 
 /**
  * Class representing an edge in the tunnel graph
@@ -168,4 +168,6 @@ function loadEdgeData(id) {
   // console.log(" - Loading data for edge " + id);
   return edgeDummyDatabase[id];
 }
-module.exports = Edge;
+
+// module.exports = Edge;
+export default Edge;

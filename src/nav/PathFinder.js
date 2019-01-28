@@ -1,5 +1,5 @@
-const Node = require('./Node.js');
-const Edge = require('./Edge.js');
+import Node from './Node.js';
+import Edge from './Edge.js';
 
 /**
  * Class for finding paths using the A* algorithm
@@ -133,6 +133,5 @@ class PathFinder {
     }
 }
 
-module.exports = PathFinder;
-
-// export default PathFinder;
+//module.exports = PathFinder;
+export default PathFinder;

@@ -1,6 +1,6 @@
-const nodeDummyDatabase = require('./dummyNodes.js');
-const edgeDummyDatabase = require('./dummyEdges.js');
-const Coordinate = require('./Coordinate.js');
+import nodeDummyDatabase from './dummyNodes.js';
+import edgeDummyDatabase from './dummyEdges.js';
+import Coordinate from './Coordinate.js';
 
 // This is a temporary database
 // TODO: Get the program to load from the SQL database
@@ -202,4 +202,5 @@ function loadIncidentEdges(id) {
   return edges;
 }
 
-module.exports = Node;
+// module.exports = Node;
+export default Node;

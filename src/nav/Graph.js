@@ -1,5 +1,5 @@
-const Node = require('./Node.js');
-const Edge = require('./Edge.js');
+import Node from './Node.js';
+import Edge from './Edge.js';
 
 /**
  * Class representing data about the entire map graph
@@ -39,4 +39,5 @@ class Graph {
   get numEdges() { return this.edges.length };
 }
 
-module.exports = Graph;
+//module.exports = Graph;
+export default Graph;

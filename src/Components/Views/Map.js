@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Map.css';
 import {ReactComponent as MapSVG} from '../Maps/map.svg';
+import Graph from '../../nav/Graph.js';
+import PathFinder from '../../nav/PathFinder.js';
 // import AStar from './nav/AStar.js';
 
 class Map extends Component {
@@ -31,6 +33,12 @@ class Map extends Component {
     this.onTouchMove = this.onTouchMove.bind(this);
 
     window.mapComponent = this; //call functions by window.mapComponent.{Function call here}
+
+    //Create a Graph object to be used by path finding
+    this.graph = new Graph(5, 6);
+
+    //Create a path finder reading that Graph
+    this.pathFinder = new PathFinder(this.graph);
   }
 
   //render map to screen
@@ -41,7 +49,7 @@ class Map extends Component {
         <button
           id="NavigateButton"
           onClick={() => {
-            this.getPath();
+            this.getPath(this.getStartPointID(), this.getEndPointID());
           }} >
           Navigate
         </button>
@@ -340,9 +348,23 @@ class Map extends Component {
     });
   }
 
-  getPath() {
+  getPath(startID, endID) {
+    var path = this.pathFinder.getPath(startID, endID);
 
-   //AStar.getPath(this.getStartPointID(), this.getEndPointID());
+    console.log(path);
+
+    //Clear all highlights
+    this.flush();
+
+    //Highlight all the edges from the path
+    path.edgeIDs.forEach(function (i) {
+      this.highlightEdge(i);
+    }.bind(this));
+
+    //Highlight all the nodes in the path
+    path.nodeIDs.forEach(function (i) {
+      this.highlightNode(i);
+    }.bind(this));
   }
 
   //override current start point with this start point call with id i.e 'N1'
