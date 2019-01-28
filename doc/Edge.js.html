@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: Edge.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: Edge.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const edgeDummyDatabase = require('./dummyEdges.js');
+
+/**
+ * Class representing an edge in the tunnel graph
+ * &lt;i>&lt;b>TODO:&lt;/b> are there any more data points that could be useful?&lt;/i>
+ */
+class Edge {
+  /**
+   * Creates a new Edge object
+   * @param {number} id - The id of the edge
+   * @param {function} [loader=loadEdgeData] - A function that will load edge data from a database and return it as a JSON object
+   */
+  constructor(id, loader=loadEdgeData) {
+
+    this.loader = loader;
+
+    // ---------- Private fields ----------
+    var _id = id, _nodeA_ID = undefined, _nodeB_ID = undefined, _length = undefined,
+      _isIndoors = undefined, _hasStairs = undefined, _hasElevator = undefined,
+      _width = undefined, _isLoaded = false;
+
+    /**
+     * Method that checks if the edge has been loaded from the database and
+     * if not, loads it &lt;i>&lt;b>TODO:&lt;/b> Make this so it loads from the SQL database&lt;/i>
+     */
+    this.checkIsLoaded = function() {
+      if(!_isLoaded) {
+        // Get the data from the database
+        var edgeData = this.loader(_id);
+
+        // Transfer the data to the private fields
+        _nodeA_ID = edgeData.nodeA_ID;
+        _nodeB_ID = edgeData.nodeB_ID;
+        _length = edgeData.length;
+        _isIndoors = edgeData.isIndoors;
+        _hasStairs = edgeData.hasStairs;
+        _hasElevator = edgeData.hasElevator;
+        _width = edgeData.width;
+
+        // Set that the edge has been loaded
+        _isLoaded = true;
+      }
+    }
+
+    // ---------- Getters for private fields ----------
+
+    /** Gets the ID of the edge in the database
+     * @return {number} The ID of the edge in the database */
+    this.getID = function() { return _id };
+
+    /** Gets whether or not the edge has been loaded
+     * @return {boolean} Whether or not the edge has been loaded */
+    this.getIsLoaded = function() { return _isLoaded };
+
+    /** Gets the ID of one of the nodes that the edge is incident to
+     * @return {number} The ID of one of the nodes that the edge is incident to */
+    this.getNodeA_ID = function() {
+      this.checkIsLoaded();
+      return _nodeA_ID;
+    }
+
+    /** Gets the ID of the other node that the edge is incident to
+     * @return {number} The ID of the other node that the edge is incident to*/
+    this.getNodeB_ID = function() {
+      this.checkIsLoaded();
+      return _nodeB_ID;
+    }
+
+    /** Gets the length of the edge in meters
+     * @return {number} The length of the edge in meters */
+    this.getLength = function() {
+      this.checkIsLoaded();
+      return _length;
+    }
+
+    /** Gets whether or not the edge is &lt;i>entirely&lt;/i> indoors
+     * @return {boolean} Whether or not the edge is &lt;i>entirely&lt;/i> indoors */
+    this.getIsIndoors = function() {
+      this.checkIsLoaded();
+      return _isIndoors;
+    }
+
+    /** Gets whether or not the edge has a staircase that must be traversed
+     * @return {boolean} Whether or not the edge has a staircase that must be traversed */
+    this.getHasStairs = function() {
+      this.checkIsLoaded();
+      return _hasStairs;
+    }
+
+    /** Gets whether or not the edge includes an elevator that must be ridden in
+     * @return {boolean} Whether or not the edge includes an elevator that must be ridden in */
+    this.getHasElevator = function() {
+      this.checkIsLoaded();
+      return _hasElevator;
+    }
+
+    /** Gets the width of the edge in meters
+     * @return {number} the width of the edge in meters */
+    this.getWidth = function() {
+      this.checkIsLoaded();
+      return _width;
+    }
+
+    // ---------- End getters for private fields ----------
+  }
+
+  // -------- Direct access getters for private fields
+
+  /** The ID of the edge in the database
+   * @type {number} */
+  get id() { return this.getID() };
+
+  /** Whether or not the edge has been loaded from the database
+   * @type {boolean} */
+  get isLoaded() { return this.getIsLoaded() };
+
+  /** The ID of one of the nodes that the edge is adjacent to
+   * @type {number} */
+  get nodeA_ID() { return this.getNodeA_ID() };
+
+  /** The ID of the other node that the edge is adjacent to
+   * @type {number} */
+  get nodeB_ID() { return this.getNodeB_ID() };
+
+  /** The length of the node in meters
+   * @type {number} */
+  get length() { return this.getLength() };
+
+  /** Whether or not the edge is &lt;i>entirely&lt;/i> indoors
+   * @type {boolean} */
+  get isIndoors() { return this.getIsIndoors() };
+
+  /** Whether or not the edge includes a staircase
+   * @type {boolean} */
+  get hasStairs() { return this.getHasStairs() };
+
+  /** Whether or not the edge includes an elevator
+   * @type {boolean} */
+  get hasElevator() { return this.getHasElevator() };
+
+  /** The width of the edge in meters
+   * @type{number} */
+  get width() { return this.getWidth() };
+
+  // ---------- End direct access getters ----------
+
+  /**
+   * Takes the ID of one of the nodes that the edge is incident to and returns
+   *  the ID of the other node which the edge is incident to. If neither of the
+   *  incident edges have the given ID, -1 is returned.
+   * @param {number} id - The ID of one of the nodes that the edge is adjacent to
+   * @return {number} The ID of the other node that the edge is adjacent to
+   */
+  getOtherNodeID(id) {
+    if( id === this.nodeA_ID ) return this.nodeB_ID;
+    if( id === this.nodeB_ID ) return this.nodeA_ID;
+    return -1;
+  }
+}
+
+/**
+ * This functions connects to the database, reads the information about a given edge,
+ * and then returns it as a JSON object
+ * @param {number} id - The ID of the edge to be loaded
+ * @return {Object} The data for that edge
+ */
+function loadEdgeData(id) {
+  // console.log(" - Loading data for edge " + id);
+  return edgeDummyDatabase[id];
+}
+module.exports = Edge;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Coordinate.html">Coordinate</a></li><li><a href="Edge.html">Edge</a></li><li><a href="Graph.html">Graph</a></li><li><a href="Node.html">Node</a></li><li><a href="PathFinder.html">PathFinder</a></li><li><a href="Test.html">Test</a></li></ul><h3>Global</h3><ul><li><a href="global.html#loadEdgeData">loadEdgeData</a></li><li><a href="global.html#loadIncidentEdges">loadIncidentEdges</a></li><li><a href="global.html#loadNodeData">loadNodeData</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 28 2019 13:51:29 GMT-0500 (EST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
