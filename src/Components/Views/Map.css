@@ -1,3 +1,80 @@
-.main{
-    margin: 64px;
+body {
+  touch-action: none;
+}
+path {
+  stroke: #063D1C;
+  fill: none !important;
+}
+
+circle {
+  stroke: #063D1C;
+  fill: #063D1C;
+}
+
+circle:hover {
+  cursor:pointer
+}
+
+.selected {
+  stroke: #CEA052;
+}
+
+.highlight {
+  stroke: #CEA052;
+  fill: #CEA052;
+}
+
+#User {
+  display:none;
+  stroke: #CEA052;
+  fill: #F2F1EB;
+}
+
+#User.show {
+  display:inherit;
+}
+
+#User:hover {
+  cursor:default;
+}
+
+#MapContainer {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 64px;
+}
+
+#Map {
+  background: #F2F1EB;
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #063D1C;
+  user-select: none;
+  max-width: 100vh;
+  touch-action:none;
+}
+
+#NavigateButton {
+  background-color: #026937;
+  border-color: #026937;
+  border-radius: 5px;
+  border-width: 2px;
+  color: white;
+  padding: 10px 10px;
+  margin: 20px;
+  font: bold 16px sans-serif;
+  -webkit-transition-duration: 0.4s;
+
+}
+
+#NavigateButton:hover:enabled   {
+  background-color: #F2F1EB;
+  color: #063D1C;
+}
+
+#NavigateButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
