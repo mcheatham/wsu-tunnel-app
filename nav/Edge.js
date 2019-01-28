@@ -8,8 +8,12 @@ class Edge {
   /**
    * Creates a new Edge object
    * @param {number} id - The id of the edge
+   * @param {function} [loader=loadEdgeData] - A function that will load edge data from a database and return it as a JSON object
    */
-  constructor(id) {
+  constructor(id, loader=loadEdgeData) {
+
+    this.loader = loader;
+
     // ---------- Private fields ----------
     var _id = id, _nodeA_ID = undefined, _nodeB_ID = undefined, _length = undefined,
       _isIndoors = undefined, _hasStairs = undefined, _hasElevator = undefined,
@@ -22,7 +26,7 @@ class Edge {
     this.checkIsLoaded = function() {
       if(!_isLoaded) {
         // Get the data from the database
-        var edgeData = loadEdgeData(_id);
+        var edgeData = this.loader(_id);
 
         // Transfer the data to the private fields
         _nodeA_ID = edgeData.nodeA_ID;
@@ -139,6 +143,19 @@ class Edge {
   get width() { return this.getWidth() };
 
   // ---------- End direct access getters ----------
+
+  /**
+   * Takes the ID of one of the nodes that the edge is incident to and returns
+   *  the ID of the other node which the edge is incident to. If neither of the
+   *  incident edges have the given ID, -1 is returned.
+   * @param {number} id - The ID of one of the nodes that the edge is adjacent to
+   * @return {number} The ID of the other node that the edge is adjacent to
+   */
+  getOtherNodeID(id) {
+    if( id === this.nodeA_ID ) return this.nodeB_ID;
+    if( id === this.nodeB_ID ) return this.nodeA_ID;
+    return -1;
+  }
 }
 
 /**
@@ -148,7 +165,7 @@ class Edge {
  * @return {Object} The data for that edge
  */
 function loadEdgeData(id) {
-  console.log("Loading data for edge " + id);
+  // console.log(" - Loading data for edge " + id);
   return edgeDummyDatabase[id];
 }
 module.exports = Edge;

@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Node<span class="signature">(id)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Node<span class="signature">(id, loader<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description">Class representing a node in the tunnel graph. Actual information about the
 node is not loaded from the database until it is needed.
@@ -47,7 +47,7 @@ node is not loaded from the database until it is needed.
     
 
     
-    <h4 class="name" id="Node"><span class="type-signature"></span>new Node<span class="signature">(id)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Node"><span class="type-signature"></span>new Node<span class="signature">(id, loader<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
     
 
     
@@ -79,7 +79,11 @@ node is not loaded from the database until it is needed.
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
+        
+        <th>Default</th>
         
 
         <th class="last">Description</th>
@@ -104,10 +108,61 @@ node is not loaded from the database until it is needed.
             </td>
 
             
+                <td class="attributes">
+                
 
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
             
 
             <td class="description last">The id of the node</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>loader</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    loadNodeData
+                
+                </td>
+            
+
+            <td class="description last">A function that will load node data from a database and return it as a JSON object</td>
         </tr>
 
     
@@ -250,7 +305,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line150">line 150</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line154">line 154</a>
     </li></ul></dd>
     
 
@@ -322,7 +377,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line154">line 154</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line158">line 158</a>
     </li></ul></dd>
     
 
@@ -394,7 +449,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line134">line 134</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line138">line 138</a>
     </li></ul></dd>
     
 
@@ -466,7 +521,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line162">line 162</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line166">line 166</a>
     </li></ul></dd>
     
 
@@ -538,7 +593,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line146">line 146</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line150">line 150</a>
     </li></ul></dd>
     
 
@@ -610,7 +665,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line138">line 138</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line142">line 142</a>
     </li></ul></dd>
     
 
@@ -682,7 +737,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line142">line 142</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line146">line 146</a>
     </li></ul></dd>
     
 
@@ -754,7 +809,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line166">line 166</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line170">line 170</a>
     </li></ul></dd>
     
 
@@ -826,7 +881,7 @@ node is not loaded from the database until it is needed.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line158">line 158</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line162">line 162</a>
     </li></ul></dd>
     
 
@@ -907,7 +962,7 @@ if not, loads it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line29">line 29</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -993,7 +1048,7 @@ if not, loads it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line87">line 87</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line91">line 91</a>
     </li></ul></dd>
     
 
@@ -1101,7 +1156,7 @@ if not, loads it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line96">line 96</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line100">line 100</a>
     </li></ul></dd>
     
 
@@ -1209,7 +1264,7 @@ if not, loads it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line57">line 57</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -1317,7 +1372,7 @@ if not, loads it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line114">line 114</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line118">line 118</a>
     </li></ul></dd>
     
 
@@ -1425,7 +1480,7 @@ if not, loads it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line78">line 78</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line82">line 82</a>
     </li></ul></dd>
     
 
@@ -1533,7 +1588,7 @@ if not, loads it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line63">line 63</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line67">line 67</a>
     </li></ul></dd>
     
 
@@ -1641,7 +1696,7 @@ if not, loads it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line69">line 69</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line73">line 73</a>
     </li></ul></dd>
     
 
@@ -1749,7 +1804,7 @@ if not, loads it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line123">line 123</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line127">line 127</a>
     </li></ul></dd>
     
 
@@ -1857,7 +1912,7 @@ if not, loads it.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line105">line 105</a>
+        <a href="Node.js.html">Node.js</a>, <a href="Node.js.html#line109">line 109</a>
     </li></ul></dd>
     
 
@@ -1923,13 +1978,13 @@ if not, loads it.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AStar.html">AStar</a></li><li><a href="Coordinate.html">Coordinate</a></li><li><a href="Edge.html">Edge</a></li><li><a href="Node.html">Node</a></li><li><a href="Test.html">Test</a></li></ul><h3>Global</h3><ul><li><a href="global.html#loadEdgeData">loadEdgeData</a></li><li><a href="global.html#loadIncidentEdges">loadIncidentEdges</a></li><li><a href="global.html#loadNodeData">loadNodeData</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Coordinate.html">Coordinate</a></li><li><a href="Edge.html">Edge</a></li><li><a href="Graph.html">Graph</a></li><li><a href="Node.html">Node</a></li><li><a href="PathFinder.html">PathFinder</a></li><li><a href="Test.html">Test</a></li></ul><h3>Global</h3><ul><li><a href="global.html#loadEdgeData">loadEdgeData</a></li><li><a href="global.html#loadIncidentEdges">loadIncidentEdges</a></li><li><a href="global.html#loadNodeData">loadNodeData</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Jan 23 2019 15:17:01 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jan 28 2019 13:51:29 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>

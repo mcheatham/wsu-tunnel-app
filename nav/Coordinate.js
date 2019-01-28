@@ -173,9 +173,7 @@ class Coordinate {
     return {
       elev: this.elev,
       lat: this.lat,
-      long: this.long,
-      rLat: this.rLat,
-      rLong: this.rLong
+      long: this.long
     };
   }
 }

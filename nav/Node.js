@@ -14,8 +14,12 @@ class Node {
   /**
    * Creates a new Node Object
    * @param {number} id - The id of the node
+   * @param {function} [loader=loadNodeData] - A function that will load node data from a database and return it as a JSON object
    */
-  constructor(id) {
+  constructor(id, loader=loadNodeData) {
+
+    this.loader = loader;
+
     // ---------- Private fields ----------
     // All of these fields will be read-only
     var _id = id, _location = undefined, _isIndoors = undefined,
@@ -31,7 +35,7 @@ class Node {
       // If the data still needs to be loaded
       if(!_isLoaded) {
         // Load the data from the database
-        var nodeData = loadNodeData(_id);
+        var nodeData = this.loader(_id);
 
         // Save the data into the private variables
         _location = new Coordinate(nodeData.location.lat, nodeData.location.long, nodeData.location.elev);
@@ -39,7 +43,7 @@ class Node {
         _buildingID = nodeData.buildingID;
         _floor = nodeData.floor;
         _roomNumber = nodeData.roomNumber;
-        _incidentEdgeIDs = loadIncidentEdges(_id);
+        _incidentEdgeIDs = nodeData.incidentEdgeIDs;
         _nodeTypeID = nodeData.nodeTypeID
 
         // Record that the data has been loaded
@@ -113,7 +117,7 @@ class Node {
      */
     this.getIncidentEdgeIDs = function() {
       this.checkIsLoaded();
-      return _incidentEdges;
+      return _incidentEdgeIDs;
     }
 
     /**
@@ -175,8 +179,10 @@ class Node {
  * @return {Object} The data for that node
  */
 function loadNodeData(id) {
-  console.log("Loading node " + id);
-  return nodeDummyDatabase[id];
+  // console.log(" - Loading data for node " + id);
+  var nodeData = nodeDummyDatabase[id];
+  nodeData.incidentEdgeIDs = loadIncidentEdges(id);
+  return nodeData;
 }
 
 /**
@@ -188,7 +194,7 @@ function loadNodeData(id) {
 function loadIncidentEdges(id) {
   var edges = [];
   edgeDummyDatabase.forEach((i) => {
-    if(i.nodeA_ID == _id || i.nodeB_ID == _id) {
+    if(i.nodeA_ID == id || i.nodeB_ID == id) {
       edges.push(i.id);
     }
   });
