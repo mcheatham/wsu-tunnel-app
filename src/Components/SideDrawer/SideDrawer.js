@@ -33,7 +33,7 @@ const sideDrawer = props => {
             </li>
 
             <li>
-                <NavLink to={"./FAQ"} onClick={props.Clicky}>FAQ</NavLink>
+                <NavLink to={"./FAQ"} onClick={props.clicky}>FAQ</NavLink>
             </li>
 
         </ul>
