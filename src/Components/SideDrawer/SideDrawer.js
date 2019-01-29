@@ -4,6 +4,7 @@ import Home from '../Images/home1.png';
 import {NavLink} from "react-router-dom";
 import SelectFrom from "./SelectFrom";
 import SelectTo from "./SelectTo";
+import Pilot from '../Images/pilot_wsu_logo.png';
 
 
 const sideDrawer = props => {
@@ -19,9 +20,9 @@ const sideDrawer = props => {
     <nav className={drawerClasses}>
         <header className={"myHeader"}>
             <NavLink to={"./Map"} onClick={props.clicky}>
-            <img src={Home} alt="Home"/>
+            <img src={Pilot} alt="Pilot"/>
             </NavLink>
-            <hr/>
+            
         </header>
 
         <ul><li>

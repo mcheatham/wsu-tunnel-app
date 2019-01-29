@@ -17,9 +17,13 @@
 
 }
 .sideDrawer.myHeader{
+    display: flex;
+    flex-direction: column;
     height: 56px;
+    width: 100%;
     margin:0;
     padding:0;
+    border-bottom: black;
 }
 .sideDrawer.myButton{
     display: flex;
@@ -47,5 +51,9 @@
 }
 .sideDrawer a:hover,
 .sideDrawer a:active{
-    color: aqua;
+    color: #026937;
+}
+.sideDrawer.pilot a{
+    margin-left: 50px;
+;
 }
