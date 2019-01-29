@@ -7,9 +7,11 @@ import SelectTo from "./SelectTo";
 
 
 const sideDrawer = props => {
-    let drawerClasses ='sideDrawer';
-    if(props.show){
-        drawerClasses = 'sideDrawer open'};
+    let drawerClasses = 'sideDrawer';
+    if (props.show) {
+        drawerClasses = 'sideDrawer open';
+    }
+
 
     return(
         <div>
@@ -27,11 +29,11 @@ const sideDrawer = props => {
         </li>
             <li><SelectTo/></li>
             <li>
-                <a href="/">About</a>
+                <NavLink to={"./About"} onClick={props.clicky}>About</NavLink>
             </li>
 
             <li>
-                <a href="/">FAQS</a>
+                <NavLink to={"./FAQ"} onClick={props.Clicky}>FAQ</NavLink>
             </li>
 
         </ul>
