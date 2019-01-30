@@ -3,7 +3,6 @@ import './Map.css';
 import {ReactComponent as MapSVG} from '../Maps/map.svg';
 import Graph from '../../nav/Graph.js';
 import PathFinder from '../../nav/PathFinder.js';
-// import AStar from './nav/AStar.js';
 
 class Map extends Component {
   constructor(props) {
@@ -21,6 +20,10 @@ class Map extends Component {
       lAvgD: null,
       animationStack: [],
       animating: false,
+      graphData: {
+        nodes: [],
+        edges: []
+      }
     };
 
     //bind touch events to this object
@@ -43,14 +46,14 @@ class Map extends Component {
 
   //render map to screen
   render() {
+    const nodes = this.state.graphData.nodes;
+
     return (
       <div id='MapContainer'>
         <MapSVG />
         <button
           id="NavigateButton"
-          onClick={() => {
-            this.getPath(this.getStartPointID(), this.getEndPointID());
-          }} >
+          onClick={() => this.getPath(this.getStartPointID(), this.getEndPointID())}>
           Navigate
         </button>
       </div>
@@ -90,103 +93,169 @@ class Map extends Component {
       map.addEventListener('touchmove', this.onTouchMove);
     }
 
+      this.fetchNodes();
+      this.fetchConnections();
   }
 
-  onTouchDown(e) {
+  fetchNodes() {
+    fetch('/getNodes')
+      .then(res => res.json())
+      .then((result) => {
+        let nodes = Array(result.length);
+        for (let i = 0; i < result.length; i++) {
+            nodes[i] = {
+            "id": result[i].NID,
+            "location": {
+                "elev": 288,
+                "lat": result[i].LATITUDE,
+                "long": result[i].LONGITUDE,
+            },
+            "isindoors": true,
+            "buildingid": result[i].BID,
+            "nodetypeid": result[i].TID,
+            "floor": null,
+            "roomnumber": null
+            };
+        };
+
+        this.setState({
+            graphData: {
+              nodes: nodes,
+              edges: this.state.graphData.edges
+            }
+        });
+      }, error => {
+        this.setState({
+          error
+        });
+      })
+  }
+
+  fetchConnections() {
+    fetch('/getConnections')
+      .then(res => res.json())
+      .then((result) => {
+        let connections = Array(result.length);
+        for (let i = 0; i < result.length; i++) {
+            connections[i] = {
+            "id": result[i].CID,
+            "nodeA_ID": result[i].NID,
+            "nodeB_ID": result[i].CONNECTED_NID,
+            "length": result[i].DISTANCE,
+            "isIndoors": true,
+            "hasStairs": false,
+            "hasElevator": false,
+            "width": 4
+            };
+        };
+
+        this.setState({
+            graphData: {
+              nodes: this.state.graphData.nodes,
+              edges: connections
+            }
+        });
+      }, error => {
+        this.setState({
+          error
+        });
+      })
+  }
+
+  onTouchDown(event) {
     var avgX = 0;
     var avgY = 0;
 
-    for(let i = 0; i < e.touches.length; i++) {
-      avgX += e.touches[i].pageX;
-      avgY += e.touches[i].pageY;
+    for(let i = 0; i < event.touches.length; i++) {
+      avgX += event.touches[i].pageX;
+      avgY += event.touches[i].pageY;
     }
 
-    avgX /= e.touches.length;
-    avgY /= e.touches.length;
+    avgX /= event.touches.length;
+    avgY /= event.touches.length;
 
-    if (e.touches.length > 1) {
+    if (event.touches.length > 1) {
       var avgD = 0;
 
-      for(let i = 0; i < e.touches.length; i++) {
-        avgD += Math.hypot(e.touches[i].pageX - avgX, e.touches[i].pageY - avgY);
+      for(let i = 0; i < event.touches.length; i++) {
+        avgD += Math.hypot(event.touches[i].pageX - avgX, event.touches[i].pageY - avgY);
       }
-      avgD /= e.touches.length;
+      avgD /= event.touches.length;
 
     }
 
 
     this.setState({
-      t: e,
+      t: event,
       lAvgX: avgX,
       lAvgY: avgY,
       lAvgD: avgD,
     });
   }
 
-  onTouchUp(e) {
+  onTouchUp(event) {
     var avgX = 0;
     var avgY = 0;
 
-    for(let i = 0; i < e.touches.length; i++) {
-      avgX += e.touches[i].pageX;
-      avgY += e.touches[i].pageY;
+    for(let i = 0; i < event.touches.length; i++) {
+      avgX += event.touches[i].pageX;
+      avgY += event.touches[i].pageY;
     }
 
-    avgX /= e.touches.length;
-    avgY /= e.touches.length;
+    avgX /= event.touches.length;
+    avgY /= event.touches.length;
 
-    if (e.touches.length > 1) {
+    if (event.touches.length > 1) {
       var avgD = 0;
 
-      for(let i = 0; i < e.touches.length; i++) {
-        avgD += Math.hypot(e.touches[i].pageX - avgX, e.touches[i].pageY - avgY);
+      for(let i = 0; i < event.touches.length; i++) {
+        avgD += Math.hypot(event.touches[i].pageX - avgX, event.touches[i].pageY - avgY);
       }
-      avgD /= e.touches.length;
+      avgD /= event.touches.length;
 
     }
 
 
     this.setState({
-      t: e,
+      t: event,
       lAvgX: avgX,
       lAvgY: avgY,
       lAvgD: avgD,
     });
   }
 
-  onTouchMove(e) {
-    e.preventDefault();
+  onTouchMove(event) {
+    event.preventDefault();
     var avgX = 0;
     var avgY = 0;
 
-    for(let i = 0; i < e.touches.length; i++) {
-      avgX += e.touches[i].pageX;
-      avgY += e.touches[i].pageY;
+    for(let i = 0; i < event.touches.length; i++) {
+      avgX += event.touches[i].pageX;
+      avgY += event.touches[i].pageY;
     }
 
-    avgX /= e.touches.length;
-    avgY /= e.touches.length;
+    avgX /= event.touches.length;
+    avgY /= event.touches.length;
 
-    if (e.touches.length > 1) {
+    if (event.touches.length > 1) {
       var avgD = 0;
 
-      for(let i = 0; i < e.touches.length; i++) {
-        avgD += Math.hypot(e.touches[i].pageX - avgX, e.touches[i].pageY - avgY);
+      for(let i = 0; i < event.touches.length; i++) {
+        avgD += Math.hypot(event.touches[i].pageX - avgX, event.touches[i].pageY - avgY);
       }
-      avgD /= e.touches.length;
+      avgD /= event.touches.length;
 
       this.scaleViewBoxAtPos(Math.min(2, Math.max(1 - (this.state.lAvgD - avgD) / 200, .5)), avgX, avgY);
     }
     let map = document.getElementById('Map');
-    let rec = map.getBoundingClientRect();
     let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-    let scalarX = viewBoxArgs[2] / rec.width;
-    let scalarY = viewBoxArgs[3] / rec.height;
+    let scalarX = viewBoxArgs[2] / map.clientWidth;
+    let scalarY = viewBoxArgs[3] / map.clientHeight;
 
     this.shiftViewBox(scalarX * (this.state.lAvgX - avgX), scalarY * (this.state.lAvgY - avgY));
 
     this.setState({
-      t: e,
+      t: event,
       lAvgX: avgX,
       lAvgY: avgY,
       lAvgD: avgD,
@@ -196,22 +265,22 @@ class Map extends Component {
   }
 
   //set origin to mouse pos on pointer down
-  onPointerDown(e) {
+  onPointerDown(event) {
+
     if (!this.state.o1) {
       this.setState({
-        o1: e,
+        o1: event,
       });
     } else if (!this.state.o2) {
       this.setState({
-        o2: e,
+        o2: event,
       });
     }
   }
 
   //relase origin and set it to null on pointer up
-  onPointerUp(e) {
-    // console.log(event);
-    if (this.state.o1 && this.state.o1.pointerId === e.pointerId) {
+  onPointerUp(event) {
+    if (this.state.o1 && this.state.o1.pointerId === event.pointerId) {
       this.setState({
         o1: null,
       });
@@ -221,7 +290,7 @@ class Map extends Component {
           o2: null,
         });
       }
-    } else if (this.state.o2 && this.state.o2.pointerId === e.pointerId) {
+    } else if (this.state.o2 && this.state.o2.pointerId === event.pointerId) {
       this.setState({
         o2: null,
       });
@@ -229,61 +298,60 @@ class Map extends Component {
   }
 
   //move view box when pointer moves
-  onPointerMove(e) {
-    e.preventDefault();
+  onPointerMove(event) {
+    event.preventDefault();
     var map = document.getElementById('Map');
 
     if (this.state.o2) {
-      if (this.state.o1.pointerId === e.pointerId) {
+      if (this.state.o1.pointerId === event.pointerId) {
         let rec = map.getBoundingClientRect();
-        let delta = Math.hypot(this.state.o2.pageX - this.state.o1.pageX, this.state.o2.pageY - this.state.o1.pageY) - Math.hypot(this.state.o2.pageX - e.pageX, this.state.o2.pageY - e.pageY);
+        let delta = Math.hypot(this.state.o2.pageX - this.state.o1.pageX, this.state.o2.pageY - this.state.o1.pageY) - Math.hypot(this.state.o2.pageX - event.pageX, this.state.o2.pageY - event.pageY);
         this.scaleViewBoxAtPos(Math.min(2, Math.max(1 - delta / 1000, .5)),
-        (e.pageX + this.state.o2.pageX) / 2 - rec.left,
-        (e.pageY + this.state.o2.pageY) / 2 - rec.top);
+        (event.pageX + this.state.o2.pageX) / 2 - rec.left,
+        (event.pageY + this.state.o2.pageY) / 2 - rec.top);
 
         let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-        let scalarX = viewBoxArgs[2] / rec.width;
-        let scalarY = viewBoxArgs[3] / rec.height;
+        let scalarX = viewBoxArgs[2] / map.clientWidth;
+        let scalarY = viewBoxArgs[3] / map.clientHeight;
 
-        this.shiftViewBox(((this.state.o1.pageX + this.state.o2.pageX) / 2 - (e.pageX + this.state.o2.pageX) / 2) * scalarX, ((this.state.o1.pageY + this.state.o2.pageY) / 2 - (e.pageY + this.state.o2.pageY) / 2) * scalarY);
+        this.shiftViewBox(((this.state.o1.pageX + this.state.o2.pageX) / 2 - (event.pageX + this.state.o2.pageX) / 2) * scalarX, ((this.state.o1.pageY + this.state.o2.pageY) / 2 - (event.pageY + this.state.o2.pageY) / 2) * scalarY);
 
         this.setState({
-          o1: e,
+          o1: event,
         });
-      } else if (this.state.o2.pointerId === e.pointerId) {
+      } else if (this.state.o2.pointerId === event.pointerId) {
         let rec = document.getElementById('Map').getBoundingClientRect();
-        let delta = Math.hypot(this.state.o2.pageX - this.state.o1.pageX, this.state.o2.pageY - this.state.o1.pageY) - Math.hypot(this.state.o1.pageX - e.pageX, this.state.o1.pageY - e.pageY);
+        let delta = Math.hypot(this.state.o2.pageX - this.state.o1.pageX, this.state.o2.pageY - this.state.o1.pageY) - Math.hypot(this.state.o1.pageX - event.pageX, this.state.o1.pageY - event.pageY);
         this.scaleViewBoxAtPos(Math.min(2, Math.max(1 - delta / 1000, .5)),
-        (e.pageX + this.state.o1.pageX) / 2 - rec.left,
-        (e.pageY + this.state.o1.pageY) / 2 - rec.top);
+        (event.pageX + this.state.o1.pageX) / 2 - rec.left,
+        (event.pageY + this.state.o1.pageY) / 2 - rec.top);
 
         let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-        let scalarX = viewBoxArgs[2] / rec.width;
-        let scalarY = viewBoxArgs[3] / rec.height;
+        let scalarX = viewBoxArgs[2] / map.clientWidth;
+        let scalarY = viewBoxArgs[3] / map.clientHeight;
 
-        this.shiftViewBox(((this.state.o1.pageX + this.state.o2.pageX) / 2 - (e.pageX + this.state.o1.pageX) / 2) * scalarX, ((this.state.o1.pageY + this.state.o2.pageY) / 2 - (e.pageY + this.state.o1.pageY) / 2) * scalarY);
+        this.shiftViewBox(((this.state.o1.pageX + this.state.o2.pageX) / 2 - (event.pageX + this.state.o1.pageX) / 2) * scalarX, ((this.state.o1.pageY + this.state.o2.pageY) / 2 - (event.pageY + this.state.o1.pageY) / 2) * scalarY);
 
         this.setState({
-          o2: e,
+          o2: event,
         });
       }
-    } else if (this.state.o1 && this.state.o1.pointerId === e.pointerId) {
-      let rec = document.getElementById('Map').getBoundingClientRect();
+    } else if (this.state.o1 && this.state.o1.pointerId === event.pointerId) {
       let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-      let scalarX = viewBoxArgs[2] / rec.width;
-      let scalarY = viewBoxArgs[3] / rec.height;
+      let scalarX = viewBoxArgs[2] / map.clientWidth;
+      let scalarY = viewBoxArgs[3] / map.clientHeight;
 
-      this.shiftViewBox((this.state.o1.pageX - e.pageX) * scalarX, (this.state.o1.pageY - e.pageY) * scalarY);
+      this.shiftViewBox((this.state.o1.pageX - event.pageX) * scalarX, (this.state.o1.pageY - event.pageY) * scalarY);
       this.setState({
-        o1: e,
+        o1: event,
       });
     }
   }
 
   //scale using scroll event. TODO: add mult touch support for scaling
-  onScroll(e) {
-    e.preventDefault();
-    this.scaleViewBoxAtPos(Math.min(2, Math.max(1 - e.deltaY / 1000, .5)), e.pageX - document.getElementById('Map').getBoundingClientRect().left, e.pageY - document.getElementById('Map').getBoundingClientRect().top);
+  onScroll(event) {
+    event.preventDefault();
+    this.scaleViewBoxAtPos(Math.min(2, Math.max(1 - event.deltaY / 1000, .5)), event.pageX - document.getElementById('Map').getBoundingClientRect().left, event.pageY - document.getElementById('Map').getBoundingClientRect().top);
   }
 
   scaleViewBox(scale) {
@@ -304,12 +372,11 @@ class Map extends Component {
 
   scaleViewBoxAtPos(scale, x, y) {
     var map = document.getElementById('Map');
-    let rec = map.getBoundingClientRect();
 
     var viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
 
-    var shiftX = (viewBoxArgs[2] * (1 - 1 / scale)) * (x / rec.width);
-    var shiftY = (viewBoxArgs[3] * (1 - 1 / scale)) * (y / rec.height);
+    var shiftX = (viewBoxArgs[2] * (1 - 1 / scale)) * (x / map.clientWidth);
+    var shiftY = (viewBoxArgs[3] * (1 - 1 / scale)) * (y / map.clientHeight);
 
     viewBoxArgs[2] *= 1 / scale;
     viewBoxArgs[3] *= 1 / scale;
@@ -352,24 +419,22 @@ class Map extends Component {
   }
 
   getPath(startID, endID) {
-    if (startID !== undefined && endID != undefined) {
-      var path = this.pathFinder.getPath(startID, endID);
+    var path = this.pathFinder.getPath(startID, endID);
 
-      console.log(path);
+    console.log(path);
 
-      //Clear all highlights & selections
-      this.flush();
+    //Clear all highlights
+    this.flush();
 
-      //Highlight all the edges from the path
-      path.edgeIDs.forEach(function (i) {
-        this.highlightEdge(i);
-      }.bind(this));
+    //Highlight all the edges from the path
+    path.edgeIDs.forEach(function (i) {
+      this.highlightEdge(i);
+    }.bind(this));
 
-      //Highlight all the nodes in the path
-      path.nodeIDs.forEach(function (i) {
-        this.highlightNode(i);
-      }.bind(this));
-    }
+    //Highlight all the nodes in the path
+    path.nodeIDs.forEach(function (i) {
+      this.highlightNode(i);
+    }.bind(this));
   }
 
   //override current start point with this start point call with id i.e 'N1'
