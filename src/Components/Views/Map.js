@@ -4,6 +4,7 @@ import {ReactComponent as MapSVG} from '../Maps/map.svg';
 import Graph from '../../nav/Graph.js';
 import PathFinder from '../../nav/PathFinder.js';
 
+
 class Map extends Component {
   constructor(props) {
     super(props);
@@ -56,6 +57,7 @@ class Map extends Component {
           onClick={() => this.getPath(this.getStartPointID(), this.getEndPointID())}>
           Navigate
         </button>
+
       </div>
     );
   }
@@ -643,4 +645,4 @@ class Map extends Component {
 }
 
 
-export default Map
+export default Map;

@@ -7,6 +7,9 @@ import Backdrop from './Components/Backdrop/Backdrop.js';
 import Map from  './Components/Views/Map.js';
 import About from './Components/Views/About.js';
 import FAQ from "./Components/Views/FAQ.js";
+import MyFooter  from './Components/Footer/MyFooter';
+
+
 
 
 
@@ -35,22 +38,24 @@ class App extends Component {
     }
 
     return (
+
         <HashRouter>
         <div style={{height: '100%'}}>
         <Toolbar drawerClick={this.drawerToggleClickHandler}/>
         <SideDrawer show={this.state.sideDrawerOpen} clicky={this.backdropClickHandler}/>
         {backdrop}
 
-        <div>
+
           <Redirect to="/Map" />
         <Route sytle={{margin:64}} exact path="/Map" component={Map}/>
         <Route exact path="/About" component={About}/>
         <Route exact path="/FAQ" component={FAQ}/>
-        </div>
-
-
+        <MyFooter/>
         </div>
         </HashRouter>
+
+
+
     );
   }
 }

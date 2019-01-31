@@ -3,7 +3,7 @@
     top:0;
     left:0;
     width:100%;
-    background: #026937;
+    background:#026937;
     height: 56px;
 }
 
@@ -21,7 +21,7 @@
 }
 
 .toolbar_logo a:hover {
-  text-shadow: 0 0 2px #e4dec7;
+    color: #af8446;
 }
 
 .toolbar_logo{
@@ -42,7 +42,7 @@
 }
 
 .toolbar_nav_items a{
-    color: #e4dec7;
+    color: white;
     text-decoration: none;
 }
 
