@@ -1,10 +1,9 @@
 import React from 'react';
 import './MyFooter.css';
-import Pilot from '../Images/reverse.jpg';
 
 
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 const MyFooter = props => {
@@ -19,7 +18,7 @@ const MyFooter = props => {
                     <footer className='linkBar'>
                             <nav className="linkBar_nav">
                                     <div>
-                            <img src={Pilot} alt={"biplane logo"}/>
+                            <img src="reverse.jpg" alt="biplane logo"/>
                                     </div>
                             <div className='spacer'></div>
                                 <div>
