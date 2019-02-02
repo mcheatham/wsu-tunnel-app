@@ -23,17 +23,33 @@ class Node {
     // ---------- Private fields ----------
     // All of these fields will be read-only
     var _id = id, _location = undefined, _isIndoors = undefined,
+      // eslint-disable-next-line
       _buildingID = undefined, _floor = undefined, _roomNumber = undefined,
-      _incidentEdgeIDs = undefined, _nodeTypeID = undefined, _isLoaded = false;
+      _incidentEdgeIDs = undefined, _nodeTypeID = undefined, _isLoaded = false, _isLoading = false;
 
     /**
      * Method that checks if the node has been loaded from the database and
      * if not, loads it.
      */
     this.checkIsLoaded = function() {
-
       // If the data still needs to be loaded
       if(!_isLoaded) {
+        this.load();
+      }
+    };
+
+
+    /**
+     * Method to load node data, regardless of whether it has already been loaded
+     */
+    this.load = function() {
+
+      //Don't start loading the data again if it's already being loaded
+      if(!_isLoading) {
+        //Set that the node is being loaded
+        _isLoading = true;
+
+        // TODO: Should this be asynchronous?
         // Load the data from the database
         var nodeData = this.loader(_id);
 
@@ -48,9 +64,28 @@ class Node {
 
         // Record that the data has been loaded
         _isLoaded = true;
+        _isLoading = false;
       }
-    };
+    }
 
+    /**
+     * Method to 'unload' Node data. This can be used to free up resources if a
+     * node is no longer needed.
+     */
+    this.unload = function() {
+      //Set that the node hasn't been loaded
+      _isLoaded = false;
+      _isLoading = false;
+
+      //Clear all the stored data
+      _location = undefined;
+      _isIndoors = undefined;
+      _buildingID = undefined;
+      _floor = undefined;
+      _roomNumber = undefined;
+      _incidentEdgeIDs = undefined;
+      _nodeTypeID = undefined;
+    }
 
     // ---------- Getters for private fields ----------
 
@@ -194,7 +229,7 @@ function loadNodeData(id) {
 function loadIncidentEdges(id) {
   var edges = [];
   edgeDummyDatabase.forEach((i) => {
-    if(i.nodeA_ID == id || i.nodeB_ID == id) {
+    if(i.nodeA_ID === id || i.nodeB_ID === id) {
       edges.push(i.id);
     }
   });

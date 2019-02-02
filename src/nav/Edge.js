@@ -17,7 +17,7 @@ class Edge {
     // ---------- Private fields ----------
     var _id = id, _nodeA_ID = undefined, _nodeB_ID = undefined, _length = undefined,
       _isIndoors = undefined, _hasStairs = undefined, _hasElevator = undefined,
-      _width = undefined, _isLoaded = false;
+      _width = undefined, _isLoaded = false, _isLoading;
 
     /**
      * Method that checks if the edge has been loaded from the database and
@@ -25,6 +25,21 @@ class Edge {
      */
     this.checkIsLoaded = function() {
       if(!_isLoaded) {
+        this.load();
+      }
+    }
+
+    /**
+     * Method to load Edge data, regardless of whether or not it has already been loaded.
+     */
+    this.load = function() {
+
+      //Don't start reloading the data if it is already being loaded
+      if(!_isLoading) {
+        //Set that the data is being loaded.
+        _isLoading = true;
+
+        //TODO: Should this be asynchronous
         // Get the data from the database
         var edgeData = this.loader(_id);
 
@@ -39,7 +54,25 @@ class Edge {
 
         // Set that the edge has been loaded
         _isLoaded = true;
+        _isLoading = false;
       }
+    }
+
+    /**
+     * Method to 'unload' Edge data. This can be used to free up space if the edge
+     * is no longer being used
+     */
+    this.unload = function() {
+      _isLoaded = false;
+      _isLoading = false;
+
+      _nodeA_ID = undefined;
+      _nodeB_ID = undefined;
+      _length = undefined;
+      _isIndoors = undefined;
+      _hasStairs = undefined;
+      _hasElevator = undefined;
+      _width = undefined;
     }
 
     // ---------- Getters for private fields ----------

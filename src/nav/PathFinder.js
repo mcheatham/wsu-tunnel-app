@@ -1,5 +1,3 @@
-import Node from './Node.js';
-import Edge from './Edge.js';
 
 /**
  * Class for finding paths using the A* algorithm
@@ -37,6 +35,7 @@ class PathFinder {
       var previousNodes = (new Array(this.graph.numNodes)).fill(-1);
       previousNodes[startID] = startID;
 
+      // eslint-disable-next-line
       var steps = 0;
 
       //Begin A* pathfinding
@@ -60,6 +59,7 @@ class PathFinder {
         var thisNode = this.graph.nodes[thisNodeID];
 
         //Get the nodes adjacent to this node
+        // eslint-disable-next-line
         thisNode.incidentEdgeIDs.forEach((id) => {
           //Get the edge corresponing to the ID
           var edge = this.graph.edges[id];
@@ -69,7 +69,7 @@ class PathFinder {
 
           //Check to see if either the next node hasn't been visited or the path to the node
           //  via the current path is shorter than the previous one
-          if( distances[nextNodeID] == -1 || distances[thisNodeID] + edge.length < distances[nextNodeID]) {
+          if( distances[nextNodeID] === -1 || distances[thisNodeID] + edge.length < distances[nextNodeID]) {
             //Store the total distance to that node
             distances[nextNodeID] = distances[thisNodeID] + edge.length;
 
@@ -115,6 +115,7 @@ class PathFinder {
         var edgeID = -1;
 
         //Get the ID of the edge connecting this node to th previous node
+        // eslint-disable-next-line
         this.graph.nodes[thisID].incidentEdgeIDs.forEach( (i) => {
           if(this.graph.edges[i].getOtherNodeID(thisID) === previousID) edgeID = i;
         } );
