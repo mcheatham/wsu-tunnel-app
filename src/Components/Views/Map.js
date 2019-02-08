@@ -95,7 +95,7 @@ class Map extends Component {
             map.addEventListener('touchmove', this.onTouchMove);
         }
 
-        
+
         this.queryDB('/getNodes', 'nodes');
         this.queryDB('/getConnections', 'edges');
     }
@@ -200,9 +200,10 @@ class Map extends Component {
             this.scaleViewBoxAtPos(Math.min(2, Math.max(1 - (this.state.lAvgD - avgD) / 200, .5)), avgX, avgY);
         }
         let map = document.getElementById('Map');
+        let rec = map.getBoundingClientRect();
         let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-        let scalarX = viewBoxArgs[2] / map.clientWidth;
-        let scalarY = viewBoxArgs[3] / map.clientHeight;
+        let scalarX = viewBoxArgs[2] / rec.width;
+        let scalarY = viewBoxArgs[3] / rec.height;
 
         this.shiftViewBox(scalarX * (this.state.lAvgX - avgX), scalarY * (this.state.lAvgY - avgY));
 
@@ -263,8 +264,8 @@ class Map extends Component {
                     (event.pageY + this.state.o2.pageY) / 2 - rec.top);
 
                 let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-                let scalarX = viewBoxArgs[2] / map.clientWidth;
-                let scalarY = viewBoxArgs[3] / map.clientHeight;
+                let scalarX = viewBoxArgs[2] / rec.width;
+                let scalarY = viewBoxArgs[3] / rec.height;
 
                 this.shiftViewBox(((this.state.o1.pageX + this.state.o2.pageX) / 2 - (event.pageX + this.state.o2.pageX) / 2) * scalarX, ((this.state.o1.pageY + this.state.o2.pageY) / 2 - (event.pageY + this.state.o2.pageY) / 2) * scalarY);
 
@@ -272,15 +273,15 @@ class Map extends Component {
                     o1: event,
                 });
             } else if (this.state.o2.pointerId === event.pointerId) {
-                let rec = document.getElementById('Map').getBoundingClientRect();
+                let rec = map.getBoundingClientRect();
                 let delta = Math.hypot(this.state.o2.pageX - this.state.o1.pageX, this.state.o2.pageY - this.state.o1.pageY) - Math.hypot(this.state.o1.pageX - event.pageX, this.state.o1.pageY - event.pageY);
                 this.scaleViewBoxAtPos(Math.min(2, Math.max(1 - delta / 1000, .5)),
                     (event.pageX + this.state.o1.pageX) / 2 - rec.left,
                     (event.pageY + this.state.o1.pageY) / 2 - rec.top);
 
                 let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-                let scalarX = viewBoxArgs[2] / map.clientWidth;
-                let scalarY = viewBoxArgs[3] / map.clientHeight;
+                let scalarX = viewBoxArgs[2] / rec.width;
+                let scalarY = viewBoxArgs[3] / rec.height;
 
                 this.shiftViewBox(((this.state.o1.pageX + this.state.o2.pageX) / 2 - (event.pageX + this.state.o1.pageX) / 2) * scalarX, ((this.state.o1.pageY + this.state.o2.pageY) / 2 - (event.pageY + this.state.o1.pageY) / 2) * scalarY);
 
@@ -289,9 +290,10 @@ class Map extends Component {
                 });
             }
         } else if (this.state.o1 && this.state.o1.pointerId === event.pointerId) {
+            let rec = map.getBoundingClientRect();
             let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-            let scalarX = viewBoxArgs[2] / map.clientWidth;
-            let scalarY = viewBoxArgs[3] / map.clientHeight;
+            let scalarX = viewBoxArgs[2] / rec.width;
+            let scalarY = viewBoxArgs[3] / rec.height;
 
             this.shiftViewBox((this.state.o1.pageX - event.pageX) * scalarX, (this.state.o1.pageY - event.pageY) * scalarY);
             this.setState({
@@ -324,11 +326,12 @@ class Map extends Component {
 
     scaleViewBoxAtPos(scale, x, y) {
         var map = document.getElementById('Map');
+        let rec = map.getBoundingClientRect();
 
         var viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
 
-        var shiftX = (viewBoxArgs[2] * (1 - 1 / scale)) * (x / map.clientWidth);
-        var shiftY = (viewBoxArgs[3] * (1 - 1 / scale)) * (y / map.clientHeight);
+        var shiftX = (viewBoxArgs[2] * (1 - 1 / scale)) * (x / rec.width);
+        var shiftY = (viewBoxArgs[3] * (1 - 1 / scale)) * (y / rec.height);
 
         viewBoxArgs[2] *= 1 / scale;
         viewBoxArgs[3] *= 1 / scale;
