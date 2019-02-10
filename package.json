@@ -6,7 +6,6 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.13",
     "@fortawesome/free-solid-svg-icons": "^5.7.0",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "immutability-helper": "^3.0.0",
     "konva": "^2.6.0",
     "leaflet": "^1.4.0",
     "react": "^16.7.0",
@@ -20,7 +19,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "start-server": "node server/server.js"
   },
   "eslintConfig": {
     "extends": "react-app"

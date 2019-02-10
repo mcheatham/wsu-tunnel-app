@@ -3,7 +3,6 @@ import './Map.css';
 import {ReactComponent as MapSVG} from '../Maps/map.svg';
 import Graph from '../../nav/Graph.js';
 import PathFinder from '../../nav/PathFinder.js';
-import update from 'immutability-helper';
 
 class Map extends Component {
     constructor(props) {
@@ -21,10 +20,6 @@ class Map extends Component {
             lAvgD: null,
             animationStack: [],
             animating: false,
-            graphData: {
-                nodes: [],
-                edges: []
-            }
         };
 
         //bind touch events to this object
@@ -39,16 +34,14 @@ class Map extends Component {
         window.mapComponent = this; //call functions by window.mapComponent.{Function call here}
 
         //Create a Graph object to be used by path finding
-        this.graph = new Graph(5, 6);
+        //this.graph = new Graph(5, 6);
 
         //Create a path finder reading that Graph
-        this.pathFinder = new PathFinder(this.graph);
+        //this.pathFinder = new PathFinder(this.graph);
     }
 
     //render map to screen
     render() {
-        const nodes = this.state.graphData.nodes;
-
         return (
             <div id='MapContainer'>
             <MapSVG />
@@ -94,24 +87,6 @@ class Map extends Component {
             map.addEventListener('touchend', this.onTouchUp);
             map.addEventListener('touchmove', this.onTouchMove);
         }
-
-        
-        this.queryDB('/getNodes', 'nodes');
-        this.queryDB('/getConnections', 'edges');
-    }
-
-    queryDB(route, table) {
-        fetch(route)
-            .then(result => result.json())
-            .then((result) => this.updateTable(table, result))
-            .catch(error => console.log(error));
-    }
-
-    updateTable(table, result) {
-        this.setState({
-            graphData: update(this.state.graphData, {[table]: {$set: result}})
-        });
-        return result;
     }
 
     onTouchDown(event) {
@@ -200,9 +175,10 @@ class Map extends Component {
             this.scaleViewBoxAtPos(Math.min(2, Math.max(1 - (this.state.lAvgD - avgD) / 200, .5)), avgX, avgY);
         }
         let map = document.getElementById('Map');
+        let rec = map.getBoundingClientRect();
         let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-        let scalarX = viewBoxArgs[2] / map.clientWidth;
-        let scalarY = viewBoxArgs[3] / map.clientHeight;
+        let scalarX = viewBoxArgs[2] / rec.width;
+        let scalarY = viewBoxArgs[3] / rec.height;
 
         this.shiftViewBox(scalarX * (this.state.lAvgX - avgX), scalarY * (this.state.lAvgY - avgY));
 
@@ -263,8 +239,8 @@ class Map extends Component {
                     (event.pageY + this.state.o2.pageY) / 2 - rec.top);
 
                 let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-                let scalarX = viewBoxArgs[2] / map.clientWidth;
-                let scalarY = viewBoxArgs[3] / map.clientHeight;
+                let scalarX = viewBoxArgs[2] / rec.width;
+                let scalarY = viewBoxArgs[3] / rec.height;
 
                 this.shiftViewBox(((this.state.o1.pageX + this.state.o2.pageX) / 2 - (event.pageX + this.state.o2.pageX) / 2) * scalarX, ((this.state.o1.pageY + this.state.o2.pageY) / 2 - (event.pageY + this.state.o2.pageY) / 2) * scalarY);
 
@@ -272,15 +248,15 @@ class Map extends Component {
                     o1: event,
                 });
             } else if (this.state.o2.pointerId === event.pointerId) {
-                let rec = document.getElementById('Map').getBoundingClientRect();
+                let rec = map.getBoundingClientRect();
                 let delta = Math.hypot(this.state.o2.pageX - this.state.o1.pageX, this.state.o2.pageY - this.state.o1.pageY) - Math.hypot(this.state.o1.pageX - event.pageX, this.state.o1.pageY - event.pageY);
                 this.scaleViewBoxAtPos(Math.min(2, Math.max(1 - delta / 1000, .5)),
                     (event.pageX + this.state.o1.pageX) / 2 - rec.left,
                     (event.pageY + this.state.o1.pageY) / 2 - rec.top);
 
                 let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-                let scalarX = viewBoxArgs[2] / map.clientWidth;
-                let scalarY = viewBoxArgs[3] / map.clientHeight;
+                let scalarX = viewBoxArgs[2] / rec.width;
+                let scalarY = viewBoxArgs[3] / rec.height;
 
                 this.shiftViewBox(((this.state.o1.pageX + this.state.o2.pageX) / 2 - (event.pageX + this.state.o1.pageX) / 2) * scalarX, ((this.state.o1.pageY + this.state.o2.pageY) / 2 - (event.pageY + this.state.o1.pageY) / 2) * scalarY);
 
@@ -289,9 +265,10 @@ class Map extends Component {
                 });
             }
         } else if (this.state.o1 && this.state.o1.pointerId === event.pointerId) {
+            let rec = map.getBoundingClientRect();
             let viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
-            let scalarX = viewBoxArgs[2] / map.clientWidth;
-            let scalarY = viewBoxArgs[3] / map.clientHeight;
+            let scalarX = viewBoxArgs[2] / rec.width;
+            let scalarY = viewBoxArgs[3] / rec.height;
 
             this.shiftViewBox((this.state.o1.pageX - event.pageX) * scalarX, (this.state.o1.pageY - event.pageY) * scalarY);
             this.setState({
@@ -324,11 +301,12 @@ class Map extends Component {
 
     scaleViewBoxAtPos(scale, x, y) {
         var map = document.getElementById('Map');
+        let rec = map.getBoundingClientRect();
 
         var viewBoxArgs = map.getAttribute('viewBox').split(' ').map(x => parseFloat(x));
 
-        var shiftX = (viewBoxArgs[2] * (1 - 1 / scale)) * (x / map.clientWidth);
-        var shiftY = (viewBoxArgs[3] * (1 - 1 / scale)) * (y / map.clientHeight);
+        var shiftX = (viewBoxArgs[2] * (1 - 1 / scale)) * (x / rec.width);
+        var shiftY = (viewBoxArgs[3] * (1 - 1 / scale)) * (y / rec.height);
 
         viewBoxArgs[2] *= 1 / scale;
         viewBoxArgs[3] *= 1 / scale;
@@ -371,13 +349,17 @@ class Map extends Component {
     }
 
     getPath(startID, endID) {
-        var path = this.pathFinder.getPath(startID, endID);
-
-        console.log(path);
-
         //Clear all highlights
         this.flush();
 
+        //this.highlightPath(this.pathFinder.getPath(startID, endID));
+
+        fetch('getPath/'+startID+'-'+endID)
+            .then(result => result.json())
+            .then(path => this.highlightPath(path));
+    }
+
+    highlightPath(path) {
         //Highlight all the edges from the path
         path.edgeIDs.forEach(function (i) {
             this.highlightEdge(i);
