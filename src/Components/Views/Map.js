@@ -3,7 +3,6 @@ import './Map.css';
 import {ReactComponent as MapSVG} from '../Maps/map.svg';
 import Graph from '../../nav/Graph.js';
 import PathFinder from '../../nav/PathFinder.js';
-import update from 'immutability-helper';
 
 class Map extends Component {
     constructor(props) {
@@ -21,10 +20,6 @@ class Map extends Component {
             lAvgD: null,
             animationStack: [],
             animating: false,
-            graphData: {
-                nodes: [],
-                edges: []
-            }
         };
 
         //bind touch events to this object
@@ -39,16 +34,14 @@ class Map extends Component {
         window.mapComponent = this; //call functions by window.mapComponent.{Function call here}
 
         //Create a Graph object to be used by path finding
-        this.graph = new Graph(5, 6);
+        //this.graph = new Graph(5, 6);
 
         //Create a path finder reading that Graph
-        this.pathFinder = new PathFinder(this.graph);
+        //this.pathFinder = new PathFinder(this.graph);
     }
 
     //render map to screen
     render() {
-        const nodes = this.state.graphData.nodes;
-
         return (
             <div id='MapContainer'>
             <MapSVG />
@@ -94,24 +87,6 @@ class Map extends Component {
             map.addEventListener('touchend', this.onTouchUp);
             map.addEventListener('touchmove', this.onTouchMove);
         }
-
-
-        this.queryDB('/getNodes', 'nodes');
-        this.queryDB('/getConnections', 'edges');
-    }
-
-    queryDB(route, table) {
-        fetch(route)
-            .then(result => result.json())
-            .then((result) => this.updateTable(table, result))
-            .catch(error => console.log(error));
-    }
-
-    updateTable(table, result) {
-        this.setState({
-            graphData: update(this.state.graphData, {[table]: {$set: result}})
-        });
-        return result;
     }
 
     onTouchDown(event) {
@@ -374,13 +349,17 @@ class Map extends Component {
     }
 
     getPath(startID, endID) {
-        var path = this.pathFinder.getPath(startID, endID);
-
-        console.log(path);
-
         //Clear all highlights
         this.flush();
 
+        //this.highlightPath(this.pathFinder.getPath(startID, endID));
+
+        fetch('getPath/'+startID+'-'+endID)
+            .then(result => result.json())
+            .then(path => this.highlightPath(path));
+    }
+
+    highlightPath(path) {
         //Highlight all the edges from the path
         path.edgeIDs.forEach(function (i) {
             this.highlightEdge(i);
