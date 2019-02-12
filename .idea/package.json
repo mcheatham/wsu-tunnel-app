@@ -1,24 +1,8 @@
 {
-
-  "name": "mysql-wsutunnelapp",
-  "version": "1.0.0",
-  "description": "skeleton access to the test database",
-  "main": "index.js",
-  "scripts": {
-    "test": "node src/connect.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "mysql": "^2.16.0"
-  }
   "name": "untitled",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.13",
-    "@fortawesome/free-solid-svg-icons": "^5.7.0",
-    "@fortawesome/react-fontawesome": "^0.1.4",
     "konva": "^2.6.0",
     "leaflet": "^1.4.0",
     "react": "^16.7.0",
@@ -32,8 +16,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "start-server": "node server/server.js"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -43,6 +26,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "proxy": "http://localhost:5000/"
+  ]
 }
