@@ -1,6 +1,5 @@
 import React from 'react';
 import './SideDrawer.css';
-import Home from '../Images/home1.png';
 import {NavLink} from "react-router-dom";
 import SelectFrom from "./SelectFrom";
 import SelectTo from "./SelectTo";
