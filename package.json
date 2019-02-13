@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "mysql": "^2.16.0"
-  }
+  },
   "name": "untitled",
   "version": "0.1.0",
   "private": true,
