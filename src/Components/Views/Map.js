@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import './Map.css';
 import {ReactComponent as MapSVG} from '../Maps/map.svg';
-import Graph from '../../nav/Graph.js';
-import PathFinder from '../../nav/PathFinder.js';
+//import Graph from '../../nav/Graph.js';
+//import PathFinder from '../../nav/PathFinder.js';
 
 class Map extends Component {
     constructor(props) {
