@@ -32,9 +32,9 @@ This field will have a video demonstrating use of the app, as well as a list of 
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Example](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Example1](https://maven.apache.org/) - Dependency Management
+* [Example2](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
 
 ### Subprojects
