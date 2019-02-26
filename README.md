@@ -14,6 +14,7 @@ ____
 - [Credits](https://github.com/RLey/wsu-tunnel-app/README.md)
   - [Contribution Link](https://github.com/RLey/wsu-tunnel-app/README.md)
 
+
 ### Summary
 Eventually this field will contain a short summary of our project, it's goals, and the results.
 ### Getting Started
@@ -53,3 +54,10 @@ This field will have a video demonstrating use of the app, as well as a list of 
   #### Pathfinding Algorithm
 
 ### Credits
+=======
+# Server #
+* Start before the client.
+* Run by executing `npm run start-server` in the root directory of the project.
+* Using https://github.com/mysqljs/mysql to access the database.
+* Using https://github.com/expressjs/express to run the server.
+
