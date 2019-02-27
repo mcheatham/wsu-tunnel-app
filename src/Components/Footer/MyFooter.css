@@ -1,0 +1,52 @@
+.linkBar{
+    position: fixed;
+    left:0;
+    bottom:0;
+    right:0;
+    background:#026937;
+    color:#026937;
+    height:55px;
+    width: 100%;
+    ;
+}
+.linkBar_nav{
+    display:flex;
+    color:white;
+
+}
+.linkBar_nav img{
+    height:100%;
+    width:auto;
+    padding:0;
+
+}
+.spacer{
+    flex:1;
+}
+.Links {
+    display: flex;
+    list-style: none;
+    color:white;
+
+}
+.Links a{
+    font-size: 24px;
+    color: white;
+}
+.Links a:hover,
+.Links a:active{
+    color:#af8446;
+}
+.Links i{
+    font-size: 24px;
+}
+.Links li{
+
+    padding: 0 0.5rem;
+    color:white;
+
+}
+.Links li:hover,
+.Links li:active{
+    color:#af8446;
+}
