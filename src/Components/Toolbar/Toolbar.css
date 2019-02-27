@@ -5,6 +5,7 @@
     width:100%;
     background:#026937;
     height: 56px;
+    z-index: 100;
 }
 
 .toolbar_nav {
